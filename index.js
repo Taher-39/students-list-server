@@ -43,6 +43,18 @@ client.connect(err => {
             })
     })
 
+    //update
+    app.patch('/updateSingleStudent/:id', (req, res) => {
+        const { name, phone, email, hobbies, editIssueDate} = req.body;
+        studentsCollection.updateOne(
+            {_id: ObjectId(req.params.id)},
+            { $set: { name, phone, email, hobbies, issueDate: editIssueDate}}
+        )
+            .then(result => {
+                res.send(result.acknowledged)
+            })
+    })
+
     //delete
     app.delete('/studentDelete/:id', (req, res) => {
         studentsCollection.deleteOne({ _id: ObjectId(req.params.id)})
